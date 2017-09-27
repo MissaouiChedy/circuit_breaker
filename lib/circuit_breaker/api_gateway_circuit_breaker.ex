@@ -42,7 +42,7 @@ defmodule CircuitBreaker.ApiGatewayCircuitBreaker do
     """
     Keep closed
     """
-    defp handle_error(reason, from, data)
+    defp handle_error(reason, from, data) do
         {:keep_state, data, {:reply, from, {:error, reason}}}
     end
 
