@@ -1,21 +1,33 @@
-# CircuitBreaker
+# Circuit Breaker Elixir Sample
 
-**TODO: Add description**
+A simple sample Elixir application demonstrating the usage of the Circuit Breaker design pattern.
+ 
+This example is discussed in [The Circuit Breaker Pattern Part 3 - Elixir implementation](http://blog.techdominator.com/article/circuit-breaker-pattern-part-3-elixir-implementation)
 
-## Installation
+## Principle
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `circuit_breaker` to your list of dependencies in `mix.exs`:
+A Circuit Breaker is an object that wraps an integration point to an external system that is usually remote, prone to failure and can sometimes respond with high latency (3rd party service, database, queue).
 
-```elixir
-def deps do
-  [
-    {:circuit_breaker, "~> 0.1.0"}
-  ]
-end
+This wrapper tracks the availability of the external system and can implement behaviors that stabilizes the system when the external system is down. To learn more please checkout:
+
+- [The Circuit Breaker Design Pattern - Basic Principle](http://blog.techdominator.com/article/circuit-breaker-pattern-part-1-basic-principle.html)
+- [Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html)
+
+## Building and running the example
+
+In order to run the example you will need an elixir development environment, [please checkout this guide for platform specific installation](https://elixir-lang.org/install.html).
+
+After cloning the repository, to run the example execute the following:
+
+```
+cd circuit_breaker
+mix deps.get
+iex -S mix
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/circuit_breaker](https://hexdocs.pm/circuit_breaker).
+Once in the elixir shell session you can run the `main` function:
+```
+iex> CircuitBreaker.main
+```
+
 
