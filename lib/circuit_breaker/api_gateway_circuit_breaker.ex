@@ -31,17 +31,11 @@ defmodule CircuitBreaker.ApiGatewayCircuitBreaker do
         end
     end
 
-    """
-    Transition to open
-    """
     defp handle_error(reason, from, data = %{error_count: error_count}) 
         when error_count > @error_count_limit do
-            open_circuit(data, reason, @to_half_open_delay)
+            open_circuit(from, data, reason, @to_half_open_delay)
     end
 
-    """
-    Keep closed
-    """
     defp handle_error(reason, from, data) do
         {:keep_state, data, {:reply, from, {:error, reason}}}
     end
@@ -59,11 +53,11 @@ defmodule CircuitBreaker.ApiGatewayCircuitBreaker do
             {:ok, pages} -> 
                 {:next_state, :closed, %{count_error: 0}, {:reply, from, {:ok, pages}}}
             {:error, reason} ->
-                open_circuit(data, reason, @to_half_open_delay)
+                open_circuit(from, data, reason, @to_half_open_delay)
         end
     end
 
-    defp open_circuit(data, reason, delay) do
+    defp open_circuit(from, data, reason, delay) do
         Process.send_after(@name, :to_half_open, delay)
         {:next_state, :open, data, {:reply, from, {:error, reason}}}
     end
