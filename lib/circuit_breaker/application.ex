@@ -12,8 +12,6 @@ defmodule CircuitBreaker.Application do
       # {CircuitBreaker.Worker, arg},
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     HTTPoison.start
     opts = [strategy: :one_for_one, name: CircuitBreaker.Supervisor]
     Supervisor.start_link(children, opts)
